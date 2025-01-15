@@ -1,0 +1,209 @@
+@import '../../../styles/variables';
+
+.background {
+  background-color: #f5c376;
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+
+    .header {
+    }
+
+    .blogPostForm {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+
+      .section {
+        border: 2.5px solid #973e3b;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+
+        h2 {
+          margin-bottom: 1rem;
+          font-family: $font-ranchers;
+          letter-spacing: 0.2rem;
+          color: #973e3b;
+        }
+
+        h3 {
+          margin-top: 1rem;
+          font-family: $font-lexend;
+        }
+        
+        .gearItem {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1rem;
+        
+            label {
+              display: flex;
+              flex-direction: column;
+              margin-bottom: 1rem;
+              font-family: $font-lexend;
+        
+              .input,
+              .textarea {
+                display: block;
+                width: 95%;
+                padding: 0.5rem;
+                margin-top: 0.5rem;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                font-family: $font-lexend;
+                height: 20px;
+              }
+            }
+          }
+        label {
+          display: block;
+          margin-bottom: 1rem;
+          font-family: $font-lexend;
+
+          input,
+          textarea {
+            display: block;
+            width: 95%;
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: $font-lexend;
+          }
+        }
+
+        .textarea {
+          height: 150px;
+        }
+      }
+    }
+  }
+}
+
+input,
+textarea {
+  display: block;
+  width: 95%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: $font-lexend;
+}
+
+.dynamicField {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+
+
+  .selectInput {
+    display: block;
+    width: 95%;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: $font-lexend;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+    color: #333;
+  
+    &:focus {
+      border-color: #973e3b;
+      outline: none;
+      box-shadow: 0 0 4px rgba(151, 62, 59, 0.4);
+    }
+  
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
+  
+  select {
+    -webkit-appearance: none; /* Hides the default dropdown arrow in Safari/Chrome */
+    -moz-appearance: none;    /* Hides the default dropdown arrow in Firefox */
+    appearance: none;         /* Hides the default dropdown arrow for modern browsers */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23666" d="M2 0L0 2h4z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 0.65rem;
+    cursor: pointer;
+  }
+  
+  option {
+    font-family: $font-lexend;
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+  
+  select {
+    -webkit-appearance: none; /* Hides the default dropdown arrow in Safari/Chrome */
+    -moz-appearance: none;    /* Hides the default dropdown arrow in Firefox */
+    appearance: none;         /* Hides the default dropdown arrow for modern browsers */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23666" d="M2 0L0 2h4z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 0.65rem;
+    cursor: pointer;
+    width: 95%;
+  }
+  
+  option {
+    font-family: $font-lexend;
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+
+  .deleteButton {
+    margin-top: 0;
+  }
+
+  .button {
+    margin-top: 1rem;
+    padding: .8rem 2em;
+    font-size: $font-size-small;
+    border: none;
+    color: white;
+    background: #d1565c; 
+    // background: #b85f62; 
+    border-radius: 15px;
+    cursor: pointer;
+    font-family: $font-lexend;
+    z-index: 15; /* Ensure button is above everything */
+    pointer-events: auto; /* Ensure button is clickable */
+  
+    /* Add a subtle box shadow below */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+    transition: background 0.3s ease, box-shadow 0.3s ease; 
+  
+    &:hover {
+      background: #b85f62; 
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3); 
+    }
+  
+    &:active {
+      background: #bd6166; 
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+    }
+  }
+
+  img {
+    max-width: 100%;
+    max-width: 100px;
+  }
+
+  .videoPreview {
+    width: 100%; // Adjust the width to match your layout
+    max-height: 300px; // Set a max height for videos
+    object-fit: cover; // Ensure the video fits well within the container
+    border-radius: 5px;
+    background-color: #000; // Black background for better visibility
+  }
+  

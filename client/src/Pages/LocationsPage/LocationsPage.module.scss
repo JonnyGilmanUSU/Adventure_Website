@@ -1,0 +1,120 @@
+@import "../../styles/variables";
+@import "../../styles/mixins";
+
+a {
+  color: $link-color;
+  text-decoration: none; // Remove underline
+  transition: color $transition-default, transform $transition-default;
+
+  &:hover {
+    color: $link-hover-color; // Highlight on hover
+  }
+}
+
+.background {
+  background-color: $background-color-primary;
+  height: 100%;
+  padding-bottom: 2rem;
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  .mainContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    overflow: visible;
+
+    @media (max-width: 600px) {
+      display: block;
+    }
+
+    display: flex;
+    gap: 5rem;
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      align-self: flex-start;
+
+      @media (max-width: 600px) {
+        position: relative;
+        text-align: center;
+        
+      }
+
+      ul {
+        gap: 1rem;
+        padding: 0;
+
+        text-transform: uppercase;
+        font-family: $font-ranchers;
+        font-size: $font-size-large;
+        font-weight: $font-weight-bold;
+        list-style-type: none;
+
+        li {
+          a {
+            text-decoration: none;
+            color: $link-color;
+            transition: color $transition-default;
+
+            &:hover {
+              color: $link-hover-color; // Highlight on hover
+            }
+
+            &.activeLink {
+              color: $link-hover-color;
+              font-weight: $font-weight-bold; // Make it stand out more
+            }
+          }
+        }
+      }
+    }
+
+    .cardGrid {
+      @include grid-layout($card-grid-gap, $card-grid-columns);
+
+      .card {
+        @include card-base;
+
+        .cardImage {
+          @include card-image;
+        }
+
+        .cardTitle {
+          text-transform: uppercase;
+          font-weight: $font-weight-bold;
+          font-size: $font-size-large;
+          margin: 0.5rem 0;
+        }
+
+        .cardLocation,
+        .cardLevel {
+          font-size: $font-size-base;
+          margin: 0.25rem 0;
+        }
+      }
+    }
+  }
+}
+
+.locationLink {
+  @include link-styles($link-hover-color); // Use mixin for consistent link styles
+}
+
+.sectionLabel {
+  @include link-styles($link-hover-color); // Reuse link styles mixin
+}
+
+
+section {
+  margin-bottom: 3em;
+}

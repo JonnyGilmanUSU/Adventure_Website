@@ -3,6 +3,13 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const connectDB = require('./config/database');
+const path = require('path');
+
+// Import Routes
+const blogRoutes = require('./routes/blogRoutes');
+const uploadRoutes = require('./routes/uploadRoutes');
+const authRoutes = require('./routes/authRoutes');
+const locationRoutes = require('./routes/locationRoutes');
 
 const app = express();
 
@@ -10,7 +17,7 @@ const app = express();
 connectDB();
 
 // CORS Options
-const whitelist = ['http://104.250.155.51', 'http://localhost:3001']; // Add allowed origins
+const whitelist = ['http://104.250.155.51', 'http://localhost:3001', 'https://adventuresofpigbotandsaydie.com']; // Add allowed origins
 const corsOptions = {
   origin: (origin, callback) => {
     if (!origin || whitelist.includes(origin)) {
@@ -25,17 +32,21 @@ const corsOptions = {
 // Middleware
 app.use(cors(corsOptions)); // Enable CORS
 app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '200mb' }));
+app.use(bodyParser.urlencoded({ limit: '200mb', extended: true }));
 
-// Import routes
-const helloRoutes = require('./routes/helloRoutes');
+// Serve static files from the 'uploads' directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Base API routes
-app.use('/api/hello', helloRoutes);
 
-// Default route
-app.get('/', (req, res) => {
-  res.send('Welcome to the Express Backend Server!');
-});
+
+// Use blogRoutes
+app.use('/api/blog-posts', blogRoutes); // Properly set up the route
+app.use('/api/upload', uploadRoutes); // Uploading Images
+app.use('/api/auth', authRoutes);
+app.use('/api/locations', locationRoutes);
+
+
 
 // Start server
 const PORT = process.env.PORT || 3000;

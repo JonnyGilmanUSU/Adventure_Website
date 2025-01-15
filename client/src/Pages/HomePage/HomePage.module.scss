@@ -1,0 +1,158 @@
+@import '../../styles/variables';
+
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; 
+    height: 100vh; 
+    width: 100vw;
+    background: url('../../Assets/Hero_Base_No_Clouds.png') no-repeat center center;
+    background-size: cover; 
+    color: white; 
+    text-align: center;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .clouds {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; // Prevents interaction with clouds
+    z-index: 5;
+  }
+  
+  .cloud1 {
+    position: absolute;
+    width: clamp(140px, 38vw, 550px); // Increased size (3-4 times bigger)
+    height: auto;
+    max-width: 100vw; // Prevent clouds from exceeding the viewport width
+    top: 3%; // 10% down from the top
+    left: 0; // Touching the left side
+  }
+  
+  .cloud2 {
+    position: absolute;
+    width: clamp(57.5px, 11.5vw, 172.5px); // 15% bigger than its original size
+    height: auto;
+    top: 25%; // 27% down from the top
+    left: 2%; // 10% from the left
+    max-width: 100vw; // Prevent clouds from exceeding the viewport width
+
+  }
+  
+  .cloud3 {
+    position: absolute;
+    width: clamp(16.67px, 3.33vw, 50px); // 1/3 of its original size
+    height: auto;
+    top: 23%; // 23% down from the top
+    left: 44%; // 40% from the left
+    max-width: 100vw; // Prevent clouds from exceeding the viewport width
+
+  }
+  
+  .cloud4 {
+    position: absolute;
+    width: clamp(110px, 34vw, 500px); // Increased size (3-4 times bigger)
+    height: auto;
+    top: 8%; // 20% down from the top
+    left: 45%; // 45% from the left
+    max-width: 100vw; // Prevent clouds from exceeding the viewport width
+
+  }
+  
+  .cloud5 {
+    position: absolute;
+    width: clamp(55px, 11vw, 165px); // 10% bigger than its original size
+    height: auto;
+    top: 23%; // 30% down from the top
+    left: 73%; // 70% from the left
+    max-width: 100vw; // Prevent clouds from exceeding the viewport width
+
+  }
+  
+  .cloud6 {
+    position: absolute;
+    width: clamp(50px, 10vw, 150px); // Right size already
+    height: auto;
+    top: 10%; // Moved up slightly
+    left: 80%; // 80% from the left
+    max-width: 100vw; // Prevent clouds from exceeding the viewport width
+
+  }
+  
+  .cloud7 {
+    position: absolute;
+    width: clamp(60px, 12vw, 180px); // 20% bigger than its original size
+    height: auto;
+    top: 10%; // Moved slightly down
+    right: 0; // Touching the right side
+    max-width: 100vw; // Prevent clouds from exceeding the viewport width
+
+  }
+  
+  
+
+  
+  .heroContent {
+    position: absolute; 
+    top: 40%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    max-width: 800px; 
+  }
+  
+  h1 {
+    font-size: clamp(3rem, 8vw, 6rem); 
+    text-transform: uppercase; 
+    margin: 0 0 0rem 0; 
+    letter-spacing: 0.1em; 
+    // font-family: $font-oswald;
+    // font-family: $font-galindo;
+    font-family: $font-ranchers;
+    letter-spacing: 0rem;
+  }
+  
+  .heroSubText {
+    font-size: clamp(.2rem, 2.5vw, 1.2rem);
+    // font-family: $font-nanum-gothic;
+    margin: 0;
+    font-family: $font-lexend;
+    font-weight: 400;
+    letter-spacing: .6rem;
+    text-transform: uppercase;
+  }
+  
+  button {
+    margin-top: 2rem;
+    padding: .8rem 2em;
+    font-size: clamp(0.7rem, 1.8vw, 1rem); 
+    border: none;
+    color: white;
+    background: #d1565c; 
+    // background: #b85f62; 
+    border-radius: 15px;
+    cursor: pointer;
+    font-family: $font-lexend;
+    z-index: 15; /* Ensure button is above everything */
+    pointer-events: auto; /* Ensure button is clickable */
+  
+    /* Add a subtle box shadow below */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+    transition: background 0.3s ease, box-shadow 0.3s ease; 
+  
+    &:hover {
+      background: #b85f62; 
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3); 
+    }
+  
+    &:active {
+      background: #bd6166; 
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+    }
+  }
+  
+  

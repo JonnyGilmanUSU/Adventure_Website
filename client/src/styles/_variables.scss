@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Galindo&family=Lexend:wght@100..900&family=Nanum+Gothic:wght@400;700;800&family=Oswald:wght@200..700&family=Ranchers&display=swap');
+
+// Font Weights
+$font-oswald: "Oswald", serif;
+$font-galindo: "Galindo", serif;
+$font-ranchers: "Ranchers", serif;
+$font-nanum-gothic: "Nanum Gothic", serif;
+$font-lexend: "Lexend", serif; 
+
+// Font Weights
+$font-weight-thin: 100; 
+$font-weight-regular: 400;
+$font-weight-bold: 700;
+$font-weight-extra-bold: 800;
+
+// $font-size-small: 0.875rem;
+// $font-size-base: 1rem;
+// $font-size-large: 1.5rem;
+// $font-size-xlarge: 2rem;
+
+// Font Sizes (Responsive)
+$font-size-small: clamp(0.75rem, 1vw, 0.875rem); // Small: Slightly responsive
+$font-size-base: clamp(0.875rem, 1.5vw, 1rem);   // Base: Adapts with screen size
+$font-size-large: clamp(1.25rem, 2vw, 1.5rem);   // Large: For headings or emphasis
+$font-size-xlarge: clamp(1.5rem, 3vw, 2rem);     // Extra-large: For main headings
+
+// Colors
+$background-color-primary: #f5c376;             // Primary background color
+$link-color: black;                             // Default link color
+$link-hover-color: #973e3b;                     // Link hover and active color
+$card-bg-color: #ffffff77;                      // Card background color
+$text-color-primary: #000000;  
+$button-color: #d1565c;                 // Default text color
+
+// Spacing
+$card-grid-gap: 1.5rem;                         // Gap between grid items
+$card-grid-columns: 300px;                      // Minimum column size for card grids
+
+// Borders and Shadows
+$card-border-radius: 8px;                       // Border radius for cards
+$box-shadow-default: 0 4px 6px rgba(0, 0, 0, 0.1); // Default box shadow
+
+// Transitions
+$transition-default: 0.3s ease;                 // Default transition duration and easing
+
+// Dimensions
+$image-size: 312px;  

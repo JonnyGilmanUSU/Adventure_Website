@@ -1,0 +1,71 @@
+
+
+
+// Oswald Font
+.oswald-regular {
+  font-family: $font-oswald;
+  font-weight: $font-weight-regular;
+  font-style: normal;
+}
+
+.oswald-bold {
+  font-family: $font-oswald;
+  font-weight: $font-weight-bold;
+  font-style: normal;
+}
+
+.oswald-extra-bold {
+  font-family: $font-oswald;
+  font-weight: $font-weight-extra-bold;
+  font-style: normal;
+}
+
+// Galindo Font
+.galindo-regular {
+  font-family: $font-galindo;
+  font-weight: $font-weight-regular;
+  font-style: normal;
+}
+
+// Ranchers Font
+.ranchers-regular {
+  font-family: $font-ranchers;
+  font-weight: $font-weight-regular;
+  font-style: normal;
+}
+
+// Nanum Gothic Font
+.nanum-gothic-regular {
+  font-family: $font-nanum-gothic;
+  font-weight: $font-weight-regular;
+  font-style: normal;
+}
+
+.nanum-gothic-bold {
+  font-family: $font-nanum-gothic;
+  font-weight: $font-weight-bold;
+  font-style: normal;
+}
+
+.nanum-gothic-extra-bold {
+  font-family: $font-nanum-gothic;
+  font-weight: $font-weight-extra-bold;
+  font-style: normal;
+}
+
+// Example Classes for Font Sizes
+.font-small {
+  font-size: $font-size-small;
+}
+
+.font-base {
+  font-size: $font-size-base;
+}
+
+.font-large {
+  font-size: $font-size-large;
+}
+
+.font-xlarge {
+  font-size: $font-size-xlarge;
+}

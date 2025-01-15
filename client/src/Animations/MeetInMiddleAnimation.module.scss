@@ -1,0 +1,39 @@
+
+.topSection {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background-color: #973e3b; // Change to desired color
+    z-index: 10;
+    display: flex;
+    justify-content: center; // Centers the SVG horizontally
+    align-items: flex-end; // Aligns the SVG to the bottom of the top section
+  }
+  
+  .bottomSection {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background-color: #973e3b; // Change to desired color
+    z-index: 10;
+    display: flex;
+    justify-content: center; // Centers the SVG horizontally
+    align-items: flex-start; // Aligns the SVG to the top of the bottom section
+  }
+  
+  .cactusTop {
+    position: absolute;
+    bottom: 0; // Anchors the SVG to the bottom of the top section
+    max-width: 150px; // Adjust the size of the SVG
+  }
+  
+  .cactusBottom {
+    position: absolute;
+    top: 0; // Anchors the SVG to the top of the bottom section
+    max-width: 150px; // Adjust the size of the SVG
+  }
+  

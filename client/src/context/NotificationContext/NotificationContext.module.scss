@@ -1,0 +1,90 @@
+@import '../../styles/variables';
+
+/* NotificationStyles.scss */
+.notificationContainer {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  z-index: 1000;
+}
+
+.notification {
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 5px solid #d1565c;
+  background-color: #fdf5e6;
+  color: black;
+  font-family: $font-lexend;
+  font-size: 1.2rem;
+  position: relative; /* To position the dismiss button */
+  display: flex;
+  align-items: center;
+  animation: fade-in-out 3s ease-in-out;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+  .typeIndicator {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    position: absolute;
+    top: 3.5px;
+    left: 3.5px;
+    background-color: transparent;
+  }
+
+  .dismissButton {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: 1.5rem;
+    color: #d1565c;
+    cursor: pointer;
+    background: none;
+    border: none;
+    outline: none;
+
+    &:hover {
+      color: #b04548;
+    }
+  }
+
+  &.success {
+    .typeIndicator {
+      background-color: #92c49c;
+    }
+  }
+
+  &.error {
+    .typeIndicator {
+      background-color: #d18589;
+    }
+  }
+
+  &.info {
+    .typeIndicator {
+      background-color: #92b5c9;
+    }
+  }
+}
+
+@keyframes fade-in-out {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}

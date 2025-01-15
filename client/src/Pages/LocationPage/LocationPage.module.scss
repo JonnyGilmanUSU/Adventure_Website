@@ -1,0 +1,92 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.background {
+  background-color: $background-color-primary;
+  height: 100%;
+  padding-bottom: 2rem;
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  .mainContainer {
+    display: flex;
+    gap: 3rem;
+
+    @media (max-width: 600px) {
+      display: block;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      flex: 0 0 250px;
+
+      @media (max-width: 600px) {
+        position: relative;
+        text-align: center;
+      }
+
+      ul {
+        gap: 1rem;
+        padding: 0;
+
+        text-transform: uppercase;
+        font-family: $font-ranchers;
+        font-size: $font-size-large;
+        font-weight: $font-weight-bold;
+        list-style-type: none;
+
+        li {
+          a {
+            text-decoration: none;
+            color: $link-color;
+            transition: color $transition-default;
+
+            &:hover {
+              color: $link-hover-color; // Highlight on hover
+            }
+
+            &.activeLink {
+              color: $link-hover-color;
+              font-weight: $font-weight-bold; // Make it stand out more
+            }
+          }
+        }
+      }
+    }
+
+    .mainContent {
+      flex: 1;
+
+      .overview {
+        margin-bottom: 3rem;
+
+        .sectionLabel {
+          font-size: $font-size-large;
+          margin-bottom: 1rem;
+        }
+
+        .cardGrid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+          gap: 1rem;
+        }
+      }
+    }
+  }
+}
+
+.sectionLabel {
+  margin-top: 1rem;
+  font-size: $font-size-xlarge;
+}
+
+

@@ -1,0 +1,14 @@
+@import '../styles/variables';
+
+.background {
+    width: 100%;
+    background-color: $background-color-primary;
+    padding-bottom: 4rem;
+
+}
+
+.mapContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
