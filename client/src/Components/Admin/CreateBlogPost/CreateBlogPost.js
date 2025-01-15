@@ -7,6 +7,10 @@ import styles from "./CreateBlogPost.module.scss";
 
 // Import Utilities
 import axiosInstance from "../../../api/axiosInstance.js";
+import {
+  initializeFormData,
+  handleSubmit,
+} from "../../../utils/blogPostUtils.js";
 
 // Import Context
 import { useNotification } from "../../../context/NotificationContext/NotificationContext.js";
@@ -59,11 +63,10 @@ const CreateBlogPost = ({ isEdit = false }) => {
 
   // Photos Section State
   const [galleryImages, setGalleryImages] = useState([]);
-  const [photoUrls, setPhotoUrls] = useState([""]);
+  // const [photoUrls, setPhotoUrls] = useState([""]);
 
   // Miscellaneous State
   const [loading, setLoading] = useState(isEdit);
-  const [expandedSection, setExpandedSection] = useState(null);
 
   // ========================
   // 2. Constants
@@ -124,67 +127,39 @@ const CreateBlogPost = ({ isEdit = false }) => {
   // ========================
   // 4. Utility Functions
   // ========================
-  const initializeFormData = (data) => {
-    // Metadata
-    setSlug(data.metadata.slug || "");
-    setStatus(data.metadata.status || "draft");
-    setCategory(data.metadata.category || "canyoneering");
-    setPublishedDate(
-      data.metadata.publishedDate
-        ? new Date(data.metadata.publishedDate).toISOString().split("T")[0]
-        : new Date().toISOString().split("T")[0]
-    );
-    setSelectedLocation(data.metadata.location || "");
-    setTags(data.metadata.tags || []);
-    setLatitude(data.metadata.coordinates?.lat || ""); // Initialize latitude
-    setLongitude(data.metadata.coordinates?.lng || ""); // Initialize longitude
+  useEffect(() => {
+    if (isEdit && blogPostToEdit) {
+      const setters = {
+        setSlug,
+        setStatus,
+        setCategory,
+        setPublishedDate,
+        setSelectedLocation,
+        setTags,
+        setLatitude,
+        setLongitude,
+        setMainImage,
+        setIntroTitle,
+        setIntroDate,
+        setOverviewTexts,
+        setRouteName,
+        setLength,
+        setRating,
+        setRappels,
+        setOverviewImages,
+        setGearList,
+        setGearText,
+        setRouteSections,
+        setGalleryImages,
+      };
 
-    // Intro Section
-    setMainImage(data.sections[0]?.intro?.imageUrl || "");
-    setIntroTitle(data.sections[0]?.intro?.title || "");
-    setIntroDate(
-      data.sections[0]?.intro?.date
-        ? new Date(data.sections[0]?.intro?.date).toISOString().split("T")[0]
-        : ""
-    );
+      console.log("Setters object:", setters); // Debug to ensure all properties are defined
 
-    // Overview Section
-    setOverviewTexts(
-      data.sections[0]?.overview?.content?.map((c) => c.content) || [""]
-    );
-    setRouteName(data.sections[0]?.overview?.routeName || "");
-    setLength(data.sections[0]?.overview?.length || "");
-    setRating(data.sections[0]?.overview?.rating || "");
-    setRappels(data.sections[0]?.overview?.rappels || "");
-    setOverviewImages(
-      data.sections[0]?.overview?.images?.map((img) => img.url) || []
-    );
+      initializeFormData(blogPostToEdit, setters);
+      setLoading(false);
+    }
+  }, [isEdit, blogPostToEdit]);
 
-    // Gear Section
-    setGearList(
-      data.sections[0]?.gear?.items || [{ item: "", description: "" }]
-    );
-    setGearText(data.sections[0]?.gear?.content?.[0]?.content || "");
-
-    // Route Section
-    setRouteSections(
-      data.sections[0]?.route?.sections.map((section) => ({
-        title: section.title,
-        content: section.content.map((c) => c.content), // Map content strings
-      })) || [
-        { title: "Approach", content: [""] },
-        { title: "Canyon", content: [""] },
-        { title: "Exit", content: [""] },
-      ]
-    );
-
-    // Photos Section
-    setGalleryImages(
-      data.sections[0]?.photos?.gallery?.map((photo) => photo.url) || []
-    );
-  };
-
-  
   // ========================
   // 5. Handlers
   // ========================
@@ -241,9 +216,9 @@ const CreateBlogPost = ({ isEdit = false }) => {
     setCategory(e.target.value);
   };
 
-  const toggleSection = (section) => {
-    setExpandedSection(expandedSection === section ? null : section);
-  };
+  // const toggleSection = (section) => {
+  //   setExpandedSection(expandedSection === section ? null : section);
+  // };
 
   const addOverviewText = () => setOverviewTexts([...overviewTexts, ""]);
   const deleteOverviewText = (index) => {
@@ -254,24 +229,6 @@ const CreateBlogPost = ({ isEdit = false }) => {
     setGearList([...gearList, { item: "", description: "" }]);
   const deleteGearItem = (index) => {
     setGearList(gearList.filter((_, i) => i !== index));
-  };
-
-  const addRouteText = (section) => {
-    setRouteSections({
-      ...routeSections,
-      [section]: [...routeSections[section], ""],
-    });
-  };
-  const deleteRouteText = (section, index) => {
-    setRouteSections({
-      ...routeSections,
-      [section]: routeSections[section].filter((_, i) => i !== index),
-    });
-  };
-
-  const addPhotoUrl = () => setPhotoUrls([...photoUrls, ""]);
-  const deletePhotoUrl = (index) => {
-    setPhotoUrls(photoUrls.filter((_, i) => i !== index));
   };
 
   const addTag = () => {
@@ -293,93 +250,65 @@ const CreateBlogPost = ({ isEdit = false }) => {
     });
   };
 
-  // Handle file upload
-  const handleFileUpload = async (file, setter, isSingle = false) => {
+  const handleFileUpload = async (files, setter, isSingle = false) => {
     const formData = new FormData();
-    formData.append("file", file);
+
+    if (files instanceof File) {
+      formData.append("files", files);
+    } else {
+      for (const file of files) {
+        formData.append("files", file);
+      }
+    }
 
     try {
-      const response = await axiosInstance.post("/upload", formData, {
+      const response = await axiosInstance.post("/upload/multiple", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      console.log("Uploaded file URL:", response.data.url); // Debug the URL
-
-      // If `isSingle` is true, set as a string; otherwise, append to the array
+      // Set the first URL for single file uploads
       if (isSingle) {
-        setter(response.data.url); // Single string
+        setter(response.data.urls[0]); // Pass the first URL
       } else {
-        setter((prev) => [...prev, response.data.url]); // Array of strings
+        setter((prev) => [...prev, ...response.data.urls]); // Append to array for multiple uploads
       }
     } catch (error) {
       console.error("File upload failed:", error);
-      alert("Failed to upload file. Please try again.");
+      alert("Failed to upload files. Please try again.");
     }
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    const formData = {
-      metadata: {
-        status: event.target.postStatus.value,
+  const onSubmit = (event) => {
+    handleSubmit({
+      event,
+      state: {
+        status,
         tags,
-        publishedDate: event.target.publishedDate.value,
-        category: event.target.category.value,
-        location: selectedLocation,
-        slug: event.target.slug.value,
-        coordinates: {
-          lat: parseFloat(latitude), // Add latitude
-          lng: parseFloat(longitude), // Add longitude
-        },
+        publishedDate,
+        category,
+        selectedLocation,
+        slug,
+        latitude,
+        longitude,
+        mainImage,
+        introTitle,
+        introDate,
+        overviewTexts,
+        routeName,
+        length,
+        rating,
+        rappels,
+        overviewImages,
+        gearText,
+        gearList,
+        routeSections,
+        galleryImages,
       },
-      sections: [
-        {
-          intro: {
-            title: event.target.title.value,
-            imageUrl: mainImage, // Main image URL
-            date: event.target.date.value,
-          },
-          overview: {
-            routeName: event.target.routeName.value,
-            length: event.target.length.value,
-            rating: event.target.rating.value,
-            rappels: event.target.rappels.value,
-            images: overviewImages.map((url) => ({ url })), // Overview images
-            content: overviewTexts.map((text) => ({ content: text })),
-          },
-          gear: {
-            content: [{ content: event.target.gearText.value }],
-            items: gearList,
-          },
-          route: {
-            sections: routeSections.map((section) => ({
-              title: section.title,
-              content: section.content.map((text) => ({ content: text })),
-            })),
-          },
-          photos: {
-            gallery: galleryImages.map((url) => ({ url })), // Gallery images
-          },
-        },
-      ],
-    };
-
-    console.log("Form Data:", JSON.stringify(formData, null, 2));
-
-    try {
-      if (isEdit) {
-        await axiosInstance.put(`/blog-posts/edit/${id}`, formData);
-        notify("success", "Blog post updated successfully!");
-      } else {
-        await axiosInstance.post("/blog-posts", formData);
-        notify("success", "Blog post created successfully!");
-      }
-      navigate("/admin");
-    } catch (error) {
-      console.error("Error saving blog post:", error);
-      notify("error", "Failed to save blog post.");
-    }
+      notify,
+      navigate,
+      isEdit,
+      id,
+    });
   };
 
   if (loading) {
@@ -410,7 +339,7 @@ const CreateBlogPost = ({ isEdit = false }) => {
             <Form
               className={styles.blogPostForm}
               method="post"
-              onSubmit={handleSubmit}
+              onSubmit={onSubmit}
             >
               {/* Metadata Section */}
               <section className={styles.section}>
@@ -603,10 +532,11 @@ const CreateBlogPost = ({ isEdit = false }) => {
                               e.target.files[0],
                               setMainImage,
                               true
-                            ); // Set `isSingle` to true
+                            ); // Single file upload
                           }
                         }}
                       />
+
                       <button
                         type="button"
                         className={`${styles.addButton} ${styles.button}`}
@@ -697,11 +627,16 @@ const CreateBlogPost = ({ isEdit = false }) => {
 
                 <input
                   type="file"
-                  onChange={(e) =>
-                    handleFileUpload(e.target.files[0], setOverviewImages)
-                  }
+                  name="galleryImages"
+                  multiple
                   className={styles.input}
+                  onChange={(e) => {
+                    if (e.target.files.length > 0) {
+                      handleFileUpload(e.target.files, setGalleryImages); // FileList
+                    }
+                  }}
                 />
+
                 <h3>Text Sections</h3>
                 {overviewTexts.map((text, index) => (
                   <div key={index} className={styles.dynamicField}>
@@ -869,16 +804,10 @@ const CreateBlogPost = ({ isEdit = false }) => {
                 <h3>Gallery Images</h3>
                 <div>
                   {galleryImages.map((url, index) => {
-                    // Normalize URL extension to lowercase for comparison
-                    const lowerCaseUrl = url.toLowerCase();
-
-                    const isVideo =
-                      lowerCaseUrl.endsWith(".mp4") ||
-                      lowerCaseUrl.endsWith(".mov") ||
-                      lowerCaseUrl.endsWith(".webm") ||
-                      lowerCaseUrl.endsWith(".ogg");
-
-                    console.log("File:", url, "Is Video:", isVideo);
+                    const fileExtension = url.split(".").pop().toLowerCase();
+                    const isVideo = ["mp4", "mov", "webm", "ogg"].includes(
+                      fileExtension
+                    );
 
                     return (
                       <div key={index} className={styles.dynamicField}>
@@ -886,7 +815,7 @@ const CreateBlogPost = ({ isEdit = false }) => {
                           <video
                             src={`${IMAGE_BASE_URL}${url}`}
                             controls
-                            className={styles.videoPreview} // Ensure the class styles the video properly
+                            className={styles.videoPreview}
                           >
                             Your browser does not support the video tag.
                           </video>
@@ -913,15 +842,15 @@ const CreateBlogPost = ({ isEdit = false }) => {
                   })}
 
                   <div className={styles.fileUploadContainer}>
-                    {/* File Input for Adding New Media */}
+                    {/* Single File Upload */}
                     <input
                       type="file"
                       name="galleryPhoto"
                       accept="image/*,video/*"
                       className={styles.input}
                       onChange={(e) => {
-                        if (e.target.files[0]) {
-                          handleFileUpload(e.target.files[0], setGalleryImages);
+                        if (e.target.files.length > 0) {
+                          handleFileUpload(e.target.files, setGalleryImages);
                         }
                       }}
                     />
@@ -935,6 +864,33 @@ const CreateBlogPost = ({ isEdit = false }) => {
                       }
                     >
                       Add Media
+                    </button>
+
+                    {/* Folder Upload */}
+                    <input
+                      type="file"
+                      name="galleryFolder"
+                      webkitdirectory="true"
+                      directory="true"
+                      multiple
+                      className={styles.input}
+                      onChange={(e) => {
+                        if (e.target.files.length > 0) {
+                          handleFileUpload(e.target.files, setGalleryImages); // Pass FileList
+                        }
+                      }}
+                    />
+
+                    <button
+                      type="button"
+                      className={`${styles.addButton} ${styles.button}`}
+                      onClick={() =>
+                        document
+                          .querySelector(`input[name="galleryFolder"]`)
+                          .click()
+                      }
+                    >
+                      Upload Folder
                     </button>
                   </div>
                 </div>
